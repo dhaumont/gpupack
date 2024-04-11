@@ -5,9 +5,9 @@ function ecSDK_clone ()
   pack=$1
   mkdir -p $pack/hub/local/src/ecSDK
   cd $pack/hub/local/src/ecSDK
-  git clone --branch 3.7.0  https://github.com/ecmwf/ecbuild
-  git clone --branch 1.19.0 https://github.com/ACCORD-NWP/eckit.git
-  git clone --branch 0.9.5  https://github.com/ecmwf/fckit
+  git clone --branch 3.7.0  git@github.com:ecmwf/ecbuild.git
+  git clone --branch 1.19.0 git@github.com:ACCORD-NWP/eckit.git
+  git clone --branch 0.9.5  git@github.com:ecmwf/fckit.git
 }
 
 function Fiat_clone ()
@@ -15,7 +15,7 @@ function Fiat_clone ()
   pack=$1
   mkdir -p $pack/hub/local/src/Fiat
   cd $pack/hub/local/src/Fiat
-  git clone --branch for-CY49T1 https://github.com/ACCORD-NWP/fiat
+  git clone --branch for-CY49T1 git@github.com:ACCORD-NWP/fiat.git
 }
 
 function Ectrans_clone ()
@@ -23,7 +23,7 @@ function Ectrans_clone ()
   pack=$1
   mkdir -p $pack/hub/local/src/Ectrans
   cd $pack/hub/local/src/Ectrans
-  git clone --branch for-CY49T1 https://github.com/ACCORD-NWP/ectrans
+  git clone --branch for-CY49T1 git@github.com:ACCORD-NWP/ectrans.git
 }
 
 function OOPS_clone ()
@@ -31,7 +31,7 @@ function OOPS_clone ()
   pack=$1
   mkdir -p $pack/hub/local/src/OOPS
   cd $pack/hub/local/src/OOPS
-  git clone --branch for-CY49T1 https://github.com/ACCORD-NWP/oops oops_src
+  git clone --branch for-CY49T1 git@github.com:ACCORD-NWP/oops git@github.com/ACCORD-NWP/oops.git
 }
 
 function FieldAPI_clone ()
@@ -39,7 +39,8 @@ function FieldAPI_clone ()
   pack=$1
   mkdir -p $pack/hub/local/src/FieldAPI
   cd $pack/hub/local/src/FieldAPI
-  git clone --branch field_util_module_with_1d https://github.com/pmarguinaud/field_api 
+  #git clone --branch field_util_module_with_1d git@github.com:pmarguinaud/field_api.git
+  git clone git@github.com:pmarguinaud/field_api.git
 }
 
 function pack_create ()

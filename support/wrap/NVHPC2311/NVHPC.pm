@@ -6,11 +6,14 @@ use base qw (Exporter);
 
 our @EXPORT = qw ($NVHPC_ROOT $OMPI_PREFIX $CUDA_PREFIX &fixEnv &prefix &site &fixLink);
 
-my ($version, $cuda, $hpcx) = ('23.11', '11.8', '2.14');
-
+my ($version, $cuda, $hpcx) = ('23.11', '12.3', '2.16');
 our $NVHPC_ROOT = &prefix () . '/nvidia/hpc_sdk/Linux_x86_64/' . $version;
+#our $NVHPC_ROOT = '/leonardo/prod/spack/03/install/0.19/linux-rhel8-icelake/nvhpc-23.1/openmpi-4.1.4-6ek2oqarjw755glr5papxirjmamqwvgd';
 
 our $OMPI_PREFIX = "comm_libs/$cuda/hpcx/hpcx-$hpcx/ompi";
+#our $OMPI_PREFIX = "openmpi-4.1.4-6ek2oqarjw755glr5papxirjmamqwvgd";
+#our $OMPI_PREFIX = "";
+
 our $CUDA_PREFIX= "cuda/$cuda";
 
 sub fixEnv
@@ -36,6 +39,7 @@ sub prefix
   my $host  = &hostname ();
   return '/ec/res4/hpcperm/sor/install' if ($host =~ m/^ac\d+-\d+\.bullx$/o);
   return '/opt/softs' if ($host =~ m/^(?:belenos|taranis)/o);
+  return '/leonardo/pub/userexternal/dhaumont/install' if ($host =~m/(?:leonardo)/o);
   die ("Unexpected host : $host");
 }
 
@@ -48,6 +52,7 @@ sub site
     {
       return 'meteo' if (m/^(?:belenos|taranis)/o);
       return 'ecmwf' if (m/^ac\d+-\d+\.bullx$/o);
+      return 'leonardo' if (m/(?:leonardo)/o);
     }
 
   die;

@@ -335,7 +335,7 @@ LD_LIBVFL =
 # External include pathes (path1:path2:...)
 # ------------------------------------------
 
-INCLUDEPATH = $GPUPACK_PREFIX/install/$ARCH/include:$GPUPACK_PREFIX/install/$ARCH/include:$GPUPACK_PREFIX/install/$ARCH/include:$GPUPACK_PREFIX/install/$ARCH/include/shared
+INCLUDEPATH = $GPUPACK_PREFIX/install/$ARCH/include:$GPUPACK_PREFIX/install/$ARCH/include:$GPUPACK_PREFIX/install/$ARCH/include:$GPUPACK_PREFIX/install/$ARCH/include/shared:/leonardo/home/userexternal/dhaumont/accord/aux/eccodes/include:/leonardo/prod/spack/03/install/0.19/linux-rhel8-icelake/nvhpc-23.1/netcdf-fortran-4.6.0-rkks6qryyknt7l34pbmrfzpfxsimfqr4/include:/leonardo/prod/spack/03/install/0.19/linux-rhel8-icelake/nvhpc-23.1/hdf5-1.12.2-6a3ddj2hipc7tm4xrdqh4ijifigxq3bq/include
 
 # (Cross-) nm command & options for BSD format
 # --------------------------------------------
