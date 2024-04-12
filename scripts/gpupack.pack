@@ -23,7 +23,18 @@ function Ectrans_clone ()
   pack=$1
   mkdir -p $pack/hub/local/src/Ectrans
   cd $pack/hub/local/src/Ectrans
-  git clone --branch for-CY49T1 git@github.com:ACCORD-NWP/ectrans.git
+  case "$ECTRANS_GPU" in
+    "ON")
+      git clone --branch arpege_integration_for_cy49t1 git@github.com:dareg/ectrans_nvidia.git ectrans
+      ;;
+    "OFF")
+      git clone --branch for-CY49T1 git@github.com:ACCORD-NWP/ectrans.git
+      ;;
+    *)
+      echo "Error, ECTRANS_GPU should be set to either OFF or ON"
+      exit 1
+      ;;
+  esac
 }
 
 function OOPS_clone ()
@@ -39,12 +50,37 @@ function FieldAPI_clone ()
   pack=$1
   mkdir -p $pack/hub/local/src/FieldAPI
   cd $pack/hub/local/src/FieldAPI
-  #git clone --branch field_util_module_with_1d git@github.com:pmarguinaud/field_api.git
-  git clone git@github.com:pmarguinaud/field_api.git
+# git clone https://github.com/ecmwf-ifs/field_api
+  git clone --branch shuffle-restrict-stat git@github.com:pmarguinaud/field_api.git
 }
 
 function pack_create ()
 {
+  if [ "$ECTRANS_GPU" = "ON" ]
+  then
+
+    ARCH_ECTRANS_GPU="${ARCH}ECTRANSGPU"
+
+    if [ ! -f "$GMK_SUPPORT/arch/$ARCH_ECTRANS_GPU.$OPT" ]
+    then
+      cp $GMK_SUPPORT/arch/$ARCH.$OPT $GMK_SUPPORT/arch/$ARCH_ECTRANS_GPU.$OPT
+      perl -i -pe "s/$ARCH/$ARCH_ECTRANS_GPU/go;" $GMK_SUPPORT/arch/$ARCH_ECTRANS_GPU.$OPT
+    fi
+
+    if [ ! -L "$GMK_SUPPORT/wrap/$ARCH_ECTRANS_GPU" ]
+    then
+      ln -s $ARCH $GMK_SUPPORT/wrap/$ARCH_ECTRANS_GPU
+    fi
+
+    if [ ! -L "$GPUPACK_PREFIX/install/$ARCH_ECTRANS_GPU" ]
+    then
+      ln -s $ARCH $GPUPACK_PREFIX/install/$ARCH_ECTRANS_GPU
+    fi
+
+    ARCH=$ARCH_ECTRANS_GPU
+
+  fi
+
   PACK=$GPUPACK_PREFIX/pack/${CYCLE}_${BRANCH}.01.${ARCH}.${OPT}
   
   if [ ! -d "$PACK" ]
@@ -88,6 +124,8 @@ function pack_create ()
   done
 
   fi
+
+  cd $PACK
 }
 
 function pack_compile ()
@@ -98,7 +136,7 @@ function pack_compile ()
   
   for prog in ics_packages ics_masterodb
   do
-    ./$prog > $prog.eo 2>&1
+    ./$prog 2>&1 | tee $prog.eo
   done
 
   if [ ! -f "bin/MASTERODB" ]
