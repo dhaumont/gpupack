@@ -310,7 +310,7 @@ LD_LANG02 = $GPUPACK_PREFIX/install/$ARCH/lib/libblas.a
 # ------------------------------------------------------------------------------
 
 LD_SYS01 = $GPUPACK_PREFIX/install/$ARCH/lib/libibmdummy.so
-LD_SYS02 =
+LD_SYS02 =  ${FFTW_LIB}/libfftw3.a
 LD_SYS03 =
 LD_SYS04 =
 LD_SYS05 =
